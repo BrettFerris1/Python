@@ -81,36 +81,53 @@ data_list=["And now here is my secret, a very simple secret: It is only with the
 "It's good to have a friend. Even if you're going to die.",
 "If you love a flower that lives on a star, then it's good at night, to look up at the sky. All the stars are blossoming."]
 again="yes"
-AndCount,OrCount = 0,0
+
 while (again=="yes"):
-    
+        AndCount,OrCount = 0,0
+        found_set=set([])
         Query_Set=set()
         query=input("query:")
         split_query=query.split()
-        #print(len(split_query))
         if (len(split_query) > 1):
                 while ("and" in split_query):
                         split_query.remove("and")
+                        AndCount=AndCount+1
                 while ("or" in split_query):
                         split_query.remove("or")
-                      
+                        OrCount=OrCount+1 
         Query_Set=set(split_query)
-        #print (Query_Set)
         Query_list=list(Query_Set)
-        #print (Query_list)
         total=len(Query_list)
-        #print (total)
-#AND SEARCH
         
-        for i,quote in enumerate(data_list):
-                found=0
-                for query in Query_list:
-                        if query in quote:
-                                found=found+1
-                        if (found == total):
-                                find=quote.find(query)
-                                print("Found at: ",i,"..."+quote[find:])
-                                
+#AND SEARCH
+        print(AndCount,OrCount)
+        if (AndCount>=1 or total==1):
+                print("AND SEARCH\n")
+                for i,quote in enumerate(data_list):
+                        found=0
+                        words = quote.split()
+                        for query in Query_list:
+                                if query in words:
+                                        found=found+1
+                                                             
+                                if (found == total):
+                                        find=quote.find(query)
+                                        print("Found at: ",i,"..."+quote[find:find+50])
+#OR SEARCH
+        if (OrCount>=1 and AndCount==0):
+                print("OR SEARCH\n")
+                for i,quote in enumerate(data_list):
+                        words=quote.split()
+                        for query in Query_list:
+                                if query in words:
+                                        find=quote.find(query)
+                                        if i not in found_set:
+                                                print("Found at: ",i,quote[:])
+                                                found_set.add(i)
+
+
+       
+
         again = input("do you want to play again? ")                      
            
     
