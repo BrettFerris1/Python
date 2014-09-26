@@ -1,3 +1,4 @@
+from datetime import datetime
 data_list=["And now here is my secret, a very simple secret: It is only with the heart that one can see rightly; what is essential is invisible to the eye.",
 "All grown-ups were once children... but only few of them remember it.",
 "People have forgotten this truth,\" the fox said. \"But you mustn’t forget it. You become responsible forever for what you’ve tamed. You’re responsible for your rose.",
@@ -83,6 +84,8 @@ data_list=["And now here is my secret, a very simple secret: It is only with the
 again="yes"
 
 while (again=="yes"):
+#REMOVES AND/OR
+        
         AndCount,OrCount = 0,0
         found_set=set([])
         Query_Set=set()
@@ -100,9 +103,10 @@ while (again=="yes"):
         total=len(Query_list)
         
 #AND SEARCH
-        print(AndCount,OrCount)
+        dt1=datetime.now()
         if (AndCount>=1 or total==1):
                 print("AND SEARCH\n")
+                
                 for i,quote in enumerate(data_list):
                         found=0
                         words = quote.split()
@@ -112,22 +116,24 @@ while (again=="yes"):
                                                              
                                 if (found == total):
                                         find=quote.find(query)
-                                        print("Found at: ",i,"..."+quote[find:find+50])
+                                        print("Found at: ",i,"..."+quote[:80])
 #OR SEARCH
+                
         if (OrCount>=1 and AndCount==0):
                 print("OR SEARCH\n")
                 for i,quote in enumerate(data_list):
-                        words=quote.split()
                         for query in Query_list:
-                                if query in words:
-                                        find=quote.find(query)
+                                if query in quote:
                                         if i not in found_set:
-                                                print("Found at: ",i,quote[:])
+                                                print("Found at: ",i,quote[:80])
                                                 found_set.add(i)
-
-
+                                                
+                                                
+        dt2=datetime.now()
+        print("Execution time for OR search:", dt2.microsecond-dt1.microsecond,"microseconds")
+        
        
-
+        
         again = input("do you want to play again? ")                      
            
     
