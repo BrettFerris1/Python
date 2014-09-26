@@ -120,10 +120,9 @@ while (again=="yes"):
         slot_set=set()
         
         
-        
+        dt1=datetime.now()
         if AndCount>=1 or len(Query_list)==1 or AndCount==0 and OrCount==0:
                 print("\nAND SEARCH\n==========")
-                dt1=datetime.now()
                 for query in Query_list:
                         if query in words_dict:
                                 found=found+1
@@ -134,24 +133,26 @@ while (again=="yes"):
                                 
                         if found == len(Query_list):
                                 for slots in (sorted(slot_set)):
-                                              print("\nFound at... ",slots,data_list[slots])
-                dt2=datetime.now()
-                print("\n\nTotal Search time = ",dt2.microsecond-dt1.microsecond," microsecnds")        
-        
+                                              print("\nFound at... ",slots,data_list[slots][:80])
+                        
+                                               
+        x=[]        
         if (OrCount>=1 and AndCount==0):
+                
                 print("\nOR SEARCH\n==========")
-                dt3=datetime.now()
                 for query in Query_list:
                         if query in words_dict:
                                 found=found+1
-                                if (len(slot_set)>0):
-                                        slot_set=words_dict[query]&slot_set
-                                else:
-                                        slot_set=words_dict[query]
-                                for slots in (sorted(slot_set)):
-                                               print("\nFound at... ",slots,data_list[slots])
-                dt4=datetime.now()
-                print("\n\nTotal Search time = ",dt4.microsecond-dt3.microsecond," microsecnds")        
+                                x=x+list(words_dict[query])
+                                #if (len(slot_set)>0):
+                                   #     slot_set=words_dict[query]&slot_set
+                                #else:
+
+                                        #slot_set=words_dict[query   
+                for slots in sorted(set(x)):
+                        print("Found at... ",slots,data_list[slots][:80])
+        dt2=datetime.now()
+        print("\n\nTotal Search time = ",dt2.microsecond-dt1.microsecond," microsecnds")        
                                         
         again = input("do you want to play again? ")                      
            
