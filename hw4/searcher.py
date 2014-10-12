@@ -1,10 +1,11 @@
 from datetime import datetime
 import data_load
 import indexer
-def search(s,w):
-        print("W _ ",indexer.w)
+import shelve
+import weather
+def search(shelve_file):
         again="yes"
-
+        s=shelve.open("fortune_shelve")
         while (again=="yes"):
                 found=0
                 
@@ -29,59 +30,39 @@ def search(s,w):
 
                 
                 found=0
-                filepath_list=set({})
+                slot_set=set({})
                 
                 dt1=datetime.now()
                 if AndCount>=1 or total==1 or AndCount==0 and OrCount==0:
                         print("\nAND SEARCH FOR\n ",Query_list)
                         
                         for query in Query_list:
-                                if query in indexer.s:  #if query is in shelve
+                                print(query)
+                                if query in s:  #if query is in shelve
                                         found=found+1
-                                        
-                                        if (len(filepath_list))>0:
-                                            filepath_list = filepath_list & set(indexer.s[query])
-                                        else:
-                                            filepath_list=set(indexer.s[query])
-                                    
-                                else:
-                                        print("QUERY NOT FOUND!\n\n")
-##                                if query in indexer.w:
-##                                        found = found +1
-##                                        if (len(filepath_list))>0:
-##                                                filepath_list = filepath_list & set(indexer.w[query])
+                                        slot_set.add(s[query])
+##                                        if len(slot_set)==0:
+##                                                slot_set=s[query]
+##                                                print("SS",slot_set)
 ##                                        else:
-##                                                filepath_list = set(indexer.w[query])
-##                                else:
-##                                        print("QUERY NOT FOUND!\n\n")
-                                                
-
-                                if found == total: #if found counter reaches the length of the query list then all values were found
-                                        for paths in filepath_list:
-                                                print("FOUND AT:  ", paths)
-
-
-                                                                                               
+##                                                slot_set=set(slot_set)&set(s[query])
+                                if found == len(Query_list):
+                                        for spots in list(slot_set):
+                                                print("FOUND AT : ", spots)
+                                        
+                                                                                        
                 x=[]       #list of all values of query in shelf (s) 
                 if (OrCount>=1 and AndCount==0):
                         
                         print("\nOR SEARCH FOR ",Query_list)
                         print("\n")
                         for query in Query_list:
-                                if query in indexer.s:
-                                        found=found+1
-                                        x=x+list(indexer.s[query])
-                                if query in indexer.w:
-                                        x=x+list(indexer.w[query])
-                                else:
-                                       print("QUERY NOT FOUND!\n\n")
+                                if query in s:
+                                        print("\n\nFOUND AT ", s[query])
                                         
-                        for paths in sorted(x):
-                                print("FOUND AT: ",paths) 
-                                
                         
                 dt2=datetime.now()
-                              
+                weather.weather(Query_list)              
                 print("\n\nTotal Search time = ",dt2.microsecond-dt1.microsecond," microsecnds")        
                                                 
                 again = input("do you want to play again? ")                      

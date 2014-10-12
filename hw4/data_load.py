@@ -7,7 +7,7 @@ def traverser():
         entry=tuple()
         data=list()
         start_dir = "fortune1"
-        out = open("raw_data.pickle",'bw')
+        rawdata = open("raw_data.pickle",'bw')
         for dirpath, dirs, files in os.walk(start_dir):
                 for single_file in files:
                     if fnmatch.fnmatch(single_file, "*txt") or fnmatch.fnmatch(single_file, "*log"):
@@ -17,13 +17,12 @@ def traverser():
                                     text=f.read()
                                     entry=(filepath,text)
                          
-                            print("\nCreating entry with ",single_file, "content and ",filepath)
+                            #print("\nCreating entry with ",single_file, "content and ",filepath)
                             data.append(entry)
                             
-
-        pickle.dump(data,out)                    
+        pickle.dump(data,rawdata)                    
         f.close()
-        out.close()
+        rawdata.close()
         
 
 
