@@ -34,31 +34,34 @@ def search(shelve_file):
                 
                 dt1=datetime.now()
                 if AndCount>=1 or total==1 or AndCount==0 and OrCount==0:
-                        print("\nAND SEARCH FOR\n ",Query_list)
+                        print("\nAND SEARCH FOR\n\n ",Query_list)
                         
                         for query in Query_list:
-                                print(query)
                                 if query in s:  #if query is in shelve
                                         found=found+1
-                                        slot_set.add(s[query])
-##                                        if len(slot_set)==0:
-##                                                slot_set=s[query]
-##                                                print("SS",slot_set)
-##                                        else:
-##                                                slot_set=set(slot_set)&set(s[query])
+                                        if len(slot_set)>0:
+                                                slot_set=set(s[query])&slot_set
+                                                
+                                        else:
+                                                slot_set=set(s[query])
                                 if found == len(Query_list):
                                         for spots in list(slot_set):
                                                 print("FOUND AT : ", spots)
                                         
                                                                                         
-                x=[]       #list of all values of query in shelf (s) 
+                x=[]
                 if (OrCount>=1 and AndCount==0):
                         
                         print("\nOR SEARCH FOR ",Query_list)
                         print("\n")
                         for query in Query_list:
                                 if query in s:
-                                        print("\n\nFOUND AT ", s[query])
+                                        for paths in set(s[query]):
+                                                x.append(paths)
+
+
+                        for spots in set(x):
+                                print("\nFOUND AT ", spots)
                                         
                         
                 dt2=datetime.now()

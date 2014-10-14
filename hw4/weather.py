@@ -15,10 +15,10 @@ def weather(city):
 
     json_data = json.loads(content_string)
     if (json_data['cod']==200):
-        print("the Weather for ", json_data["name"], "is: ")
+        print("\n\nThe Weather for ", json_data["name"], "is: ")
         pprint(json_data["weather"][0]["main"])
     else:
-        print("no weather search found")
+        print("\nno weather search found\n")
 
        
 
