@@ -4,6 +4,7 @@ import indexer
 import shelve
 import weather
 def search(shelve_file):
+        print("SEARCHER")
         again="yes"
         s=shelve.open("fortune_shelve")
         while (again=="yes"):

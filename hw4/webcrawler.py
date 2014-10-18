@@ -4,6 +4,7 @@ import re
 import pickle
 
 def visit_url(url, domain):
+    #print("VISITURL")
     global webcontent_dict 
     global crawler_backlog
     webcontent=tuple()
@@ -40,15 +41,17 @@ def visit_url(url, domain):
                         visit_url(urls, domain)
     except URLError as e:
         print("error")
+def webcrawler():
+    global crawler_backlog
+    crawler_backlog = {}
+    global webcontent_list
+    webcontent_list = []
+    seed = "http://www.newhaven.edu/"
 
-crawler_backlog = {}
-webcontent_list = []
-seed = "http://www.newhaven.edu/"
+    crawler_backlog[seed]=0
+    webdata = open("webdata.pickle",'bw')
+    visit_url(seed, "www.newhaven.edu")
 
-crawler_backlog[seed]=0
-webdata = open("webdata.pickle",'bw')
-visit_url(seed, "www.newhaven.edu")
-
-pickle.dump(webcontent_list,webdata)
-webdata.close()
+    pickle.dump(webcontent_list,webdata)
+    webdata.close()
 

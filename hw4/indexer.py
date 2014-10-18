@@ -5,7 +5,7 @@ filepath_dict={}
 entry={}
 path_list=[]
 def process_data(fortune_file,url_file):
-    
+    print("INDEXER")
     s=shelve.open("fortune_shelve")
     with open(fortune_file,'br') as f:
         p=pickle.load(f)

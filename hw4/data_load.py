@@ -4,6 +4,7 @@ import fnmatch
 import pickle
 
 def traverser():
+        #print("TRAVERSER")
         entry=tuple()
         data=list()
         start_dir = "fortune1"
