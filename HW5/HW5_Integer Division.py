@@ -12,20 +12,21 @@ def get_equation():
   try:
     q=x/y
   except (ZeroDivisionError,ValueError):
-    get_equation()
+    pass
   answer=input(str(x)+"/"+str(y)+"=")
   try:
     int(answer)
   except ValueError:
     print("Please Enter Integers Only!")
-    get_equation()
+    return
   if int(answer)==int(q):
     print("CORRECT!")
-    get_equation()
   else:
     print("INCORRECT!")
-    get_equation() 
-
+  return
 print("INTEGER DIVISIONS\n")
-get_equation()
+again="yes"
+while again == "yes":
+  get_equation()
+  again = input ("Do you want to play again?")
   
